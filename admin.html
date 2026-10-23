@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Atelier Noir</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111113'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-size='16' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</head>
+<body>
+  <div class="admin-login" id="loginView">
+    <div class="panel">
+      <h1>Store admin</h1>
+      <p class="sub">Sign in to manage products and orders.</p>
+      <div class="alert alert-error" id="loginAlert" hidden></div>
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn" id="loginBtn" style="width: 100%;">Sign in</button>
+      </form>
+      <p class="sub" style="margin-top: 18px;">First time? Run <code>setup()</code> then <code>setAdminPassword()</code> in the Apps Script editor — see README.md.</p>
+    </div>
+  </div>
+
+  <div class="admin-shell" id="adminShell">
+    <aside class="admin-side">
+      <a class="logo" href="index.html" data-store-name>Atelier Noir</a>
+      <p class="side-label">Menu</p>
+      <button type="button" class="side-link" data-view="overview" aria-current="page">Overview</button>
+      <button type="button" class="side-link" data-view="products">Products <span class="count" id="sideProductCount">0</span></button>
+      <button type="button" class="side-link" data-view="orders">Orders <span class="count" id="sideOrderCount">0</span></button>
+      <div class="spacer"></div>
+      <a class="side-link" href="index.html" target="_blank" rel="noopener noreferrer">View store ↗</a>
+      <button type="button" class="side-link" id="logoutBtn">Log out</button>
+    </aside>
+
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <h1 id="viewTitle">Overview</h1>
+        <div class="spacer"></div>
+        <button type="button" class="btn btn-quiet btn-sm" id="refreshBtn">Refresh</button>
+      </div>
+
+      <div class="admin-body">
+        <div class="setup-callout" id="setupCallout" hidden>
+          <h2>Connect your store</h2>
+          <p style="margin-top: 0; color: var(--ink-soft);">The API URL is not configured yet, so this dashboard is read-only.</p>
+          <ol>
+            <li>Deploy the Apps Script backend (README.md → Deployment).</li>
+            <li>Copy your web app URL into <code>js/config.js</code> → <code>API_URL</code>.</li>
+            <li>Reload this page and sign in with your admin account.</li>
+          </ol>
+        </div>
+
+        <section class="admin-view on" id="view-overview" aria-label="Overview">
+          <div class="stat-grid">
+            <div class="stat-card"><div class="num" id="statProducts">0</div><div class="lbl">Products</div></div>
+            <div class="stat-card"><div class="num" id="statOrders">0</div><div class="lbl">Orders</div></div>
+            <div class="stat-card"><div class="num" id="statPending">0</div><div class="lbl">Pending orders</div></div>
+            <div class="stat-card"><div class="num" id="statLowStock">0</div><div class="lbl">Low stock (≤3)</div></div>
+          </div>
+          <div class="table-wrap">
+            <div class="table-toolbar"><h2>Recent orders</h2></div>
+            <table class="data">
+              <thead>
+                <tr><th>Order</th><th>Date</th><th>Customer</th><th>Total</th><th>Status</th></tr>
+              </thead>
+              <tbody id="recentOrdersBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="admin-view" id="view-products" aria-label="Products">
+          <div class="table-wrap">
+            <div class="table-toolbar">
+              <h2>Products</h2>
+              <div class="spacer"></div>
+              <label class="skip-link" for="prodSearch">Search products</label>
+              <input type="search" id="prodSearch" class="sort-select" placeholder="Search…" autocomplete="off">
+              <label class="skip-link" for="prodStatusFilter">Filter by status</label>
+              <select id="prodStatusFilter" class="sort-select">
+                <option value="all">All statuses</option>
+                <option value="available">Available</option>
+                <option value="unavailable">Unavailable</option>
+                <option value="archived">Archived</option>
+              </select>
+              <button type="button" class="btn btn-sm" id="addProductBtn">+ Add product</button>
+            </div>
+            <table class="data">
+              <thead>
+                <tr><th></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="productsBody"></tbody>
+            </table>
+            <div class="state-box" id="productsEmpty" hidden style="border: none;">
+              <h3>No products yet</h3>
+              <p>Add your first product — it will appear in the storefront automatically.</p>
+              <button type="button" class="btn" data-open-add>+ Add product</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-view" id="view-orders" aria-label="Orders">
+          <div class="table-wrap">
+            <div class="table-toolbar">
+              <h2>Orders</h2>
+              <div class="spacer"></div>
+              <div class="chips" id="orderChips" style="margin: 0;"></div>
+            </div>
+            <table class="data">
+              <thead>
+                <tr><th>Order</th><th>Date</th><th>Customer</th><th>Wilaya</th><th>Total</th><th>Payment</th><th>Status</th><th></th></tr>
+              </thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+            <div class="state-box" id="ordersEmpty" hidden style="border: none;">
+              <h3>No orders yet</h3>
+              <p>Orders placed in the storefront will show up here.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-back" id="productModalBack" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="productModalTitle">Add product</h2>
+        <button type="button" class="icon-btn" data-close-modal aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <form id="productForm" novalidate>
+        <div class="modal-body">
+          <div class="alert alert-error" id="productAlert" hidden></div>
+          <input type="hidden" id="prodId">
+          <div class="form-grid">
+            <div class="field full">
+              <label for="prodName">Product name *</label>
+              <input type="text" id="prodName" maxlength="120" required>
+              <span class="err" data-err-for="prodName"></span>
+            </div>
+            <div class="field">
+              <label for="prodCategory">Category *</label>
+              <input type="text" id="prodCategory" list="categoryList" maxlength="40" required>
+              <datalist id="categoryList"></datalist>
+              <span class="err" data-err-for="prodCategory"></span>
+            </div>
+            <div class="field">
+              <label for="prodStatus">Status</label>
+              <select id="prodStatus">
+                <option value="available">Available</option>
+                <option value="unavailable">Unavailable</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="prodPrice">Price *</label>
+              <input type="number" id="prodPrice" min="0" step="1" required>
+              <span class="err" data-err-for="prodPrice"></span>
+            </div>
+            <div class="field">
+              <label for="prodOldPrice">Old price (optional)</label>
+              <input type="number" id="prodOldPrice" min="0" step="1">
+              <span class="err" data-err-for="prodOldPrice"></span>
+            </div>
+            <div class="field full">
+              <label for="prodDesc">Description</label>
+              <textarea id="prodDesc" rows="3" maxlength="2000"></textarea>
+            </div>
+            <div class="field full">
+              <label for="prodImageFile">Photo upload (JPG, PNG, WebP · max 3 MB)</label>
+              <div class="upload-row">
+                <input type="file" id="prodImageFile" accept="image/jpeg,image/png,image/webp">
+                <img class="img-preview" id="prodImagePreview" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="">
+                <span class="hint" id="uploadStatus"></span>
+              </div>
+            </div>
+            <div class="field full">
+              <label for="prodImageUrl">Image URL (used if no upload)</label>
+              <input type="url" id="prodImageUrl" placeholder="https://res.cloudinary.com/…" maxlength="500">
+              <span class="err" data-err-for="prodImageUrl"></span>
+            </div>
+            <div class="field full">
+              <label for="prodExtraImages">Additional images (one URL per line, optional)</label>
+              <textarea id="prodExtraImages" rows="2" maxlength="3000"></textarea>
+            </div>
+            <div class="field">
+              <label for="prodSizes">Sizes (comma separated)</label>
+              <input type="text" id="prodSizes" placeholder="S, M, L, XL" maxlength="200">
+              <span class="hint">Leave empty if the product has no sizes.</span>
+            </div>
+            <div class="field">
+              <label for="prodColors">Colors (comma separated)</label>
+              <input type="text" id="prodColors" placeholder="Black, White" maxlength="200">
+            </div>
+            <div class="field">
+              <label for="prodStock">Stock quantity *</label>
+              <input type="number" id="prodStock" min="0" step="1" required>
+              <span class="err" data-err-for="prodStock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn btn-ghost" data-close-modal>Cancel</button>
+          <button type="submit" class="btn" id="saveProductBtn">Save product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-back" id="orderModalBack" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+    <div class="modal" style="width: min(560px, 100%);">
+      <div class="modal-head">
+        <h2 id="orderModalTitle">Order details</h2>
+        <button type="button" class="icon-btn" data-close-order-modal aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="orderModalBody"></div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-ghost" data-close-order-modal>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Atelier Noir</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111113'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-size='16' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/store.js" defer></script>
+  <script src="js/cart.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#pdp">Skip to product</a>
+
+  <div class="demo-bar" id="demoBar" hidden>
+    Demo mode — showing sample products. <a href="README.md">See README</a> to connect your store.
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <nav class="nav" aria-label="Main">
+        <a class="logo" href="index.html" data-store-name>Atelier Noir</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#shop">Shop</a></li>
+          <li><a href="index.html#categories">Categories</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button type="button" class="icon-btn" id="cartOpenBtn" aria-label="Open shopping cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 7h12l1.2 12.2a1.8 1.8 0 0 1-1.8 2H6.6a1.8 1.8 0 0 1-1.8-2L6 7Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            <span class="cart-count" data-cart-count data-empty="true">0</span>
+          </button>
+          <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+        </div>
+      </nav>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="index.html#shop">Shop</a>
+      <a href="index.html#categories">Categories</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="admin.html">Store admin</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <nav class="breadcrumbs" aria-label="Breadcrumb" id="crumbs">
+        <a href="index.html">Home</a> / <a href="index.html#shop">Shop</a> / <span id="crumbName">Product</span>
+      </nav>
+
+      <div class="pdp" id="pdp">
+        <div class="pdp-gallery">
+          <div class="pdp-main"><img id="pdpImage" src="" alt="" width="600" height="750"></div>
+          <div class="pdp-thumbs" id="pdpThumbs"></div>
+        </div>
+
+        <div class="pdp-info">
+          <p class="card-category" id="pdpCategory"></p>
+          <h1 id="pdpName">Loading…</h1>
+          <div class="pdp-price" id="pdpPrice"></div>
+          <p class="pdp-desc" id="pdpDesc"></p>
+
+          <div class="opt-group" id="sizeGroup" hidden>
+            <span class="opt-label">Size <span class="val" id="sizeValue"></span></span>
+            <div class="pills" id="sizePills" role="group" aria-label="Choose a size"></div>
+          </div>
+
+          <div class="opt-group" id="colorGroup" hidden>
+            <span class="opt-label">Color <span class="val" id="colorValue"></span></span>
+            <div class="pills" id="colorPills" role="group" aria-label="Choose a color"></div>
+          </div>
+
+          <div class="qty-row">
+            <div class="qty" aria-label="Quantity">
+              <button type="button" id="qtyMinus" aria-label="Decrease quantity">−</button>
+              <output id="qtyValue">1</output>
+              <button type="button" id="qtyPlus" aria-label="Increase quantity">+</button>
+            </div>
+            <button type="button" class="btn" id="addToCartBtn">Add to cart</button>
+          </div>
+
+          <p class="stock-line" id="stockLine"></p>
+
+          <div class="meta-list">
+            <span id="metaSku"></span>
+            <span id="metaCategory"></span>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <details class="info-acc">
+              <summary>Delivery &amp; payment</summary>
+              <p>Cash on delivery across Algeria. Delivery time and cost are confirmed by phone after you place your order.</p>
+            </details>
+            <details class="info-acc">
+              <summary>Exchanges</summary>
+              <p>Exchange an unworn item within 7 days of delivery. Keep the original packaging and tags.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <section class="section" aria-labelledby="relatedTitle" style="padding-top: 10px;">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Keep looking</p>
+            <h2 id="relatedTitle">You may also like</h2>
+          </div>
+        </div>
+        <div class="product-grid" id="relatedGrid"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="logo" href="index.html" data-store-name>Atelier Noir</a>
+          <p class="footer-note" id="footerBlurb">Curated everyday clothing with cash on delivery.</p>
+        </div>
+        <div>
+          <h3>Shop</h3>
+          <ul>
+            <li><a href="index.html#shop">All products</a></li>
+            <li><a href="index.html#categories">Categories</a></li>
+            <li><a href="admin.html">Store admin</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <ul>
+            <li id="footerPhone"></li>
+            <li id="footerEmail"></li>
+            <li id="footerAddress"></li>
+          </ul>
+        </div>
+        <div>
+          <h3>Follow</h3>
+          <ul id="footerSocial"></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span id="footerCopy"></span>
+        <span class="footer-note">Privacy notice: we only keep your name, phone and address to deliver your order. We never sell your data.</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart" aria-hidden="true">
+    <div class="cart-head">
+      <h2>Your cart</h2>
+      <button type="button" class="icon-btn" id="cartCloseBtn" aria-label="Close cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="cart-lines" id="cartLines"></div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal"></span></div>
+      <a class="btn" href="checkout.html" id="checkoutBtn">Checkout</a>
+      <p class="cart-note">Cash on delivery · no online payment required</p>
+    </div>
+  </aside>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+</body>
+</html>

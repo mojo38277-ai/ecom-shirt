@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="600" height="750" role="img" aria-label="Leather crossbody bag">
+  <rect width="600" height="750" fill="#e9e6e1"/>
+  <path d="M300 215c-70 0-118 44-124 118" fill="none" stroke="#7a5230" stroke-width="14" stroke-linecap="round"/>
+  <path d="M300 215c70 0 118 44 124 118" fill="none" stroke="#7a5230" stroke-width="14" stroke-linecap="round"/>
+  <rect x="168" y="320" width="264" height="230" rx="24" fill="#8a5f38"/>
+  <rect x="168" y="320" width="264" height="66" rx="24" fill="#734e2d"/>
+  <rect x="284" y="368" width="32" height="44" rx="8" fill="#c9a86a"/>
+  <rect x="196" y="420" width="208" height="96" rx="14" fill="none" stroke="#734e2d" stroke-width="6"/>
+  <text x="300" y="700" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#8d8778">Atelier Noir</text>
+</svg>

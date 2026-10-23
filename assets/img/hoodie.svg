@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="600" height="750" role="img" aria-label="Oversized black hoodie">
+  <rect width="600" height="750" fill="#e9e6e1"/>
+  <path d="M300 175c-38 0-64 22-70 55l-104 44c-14 6-22 19-20 34l22 148c2 15 15 26 30 25l36-3 6 128c1 15 14 27 29 27h172c15 0 28-12 29-27l6-128 36 3c15 1 28-10 30-25l22-148c2-15-6-28-20-34l-104-44c-6-33-32-55-70-55z" fill="#17181c"/>
+  <path d="M244 205c8 34 28 52 56 52s48-18 56-52" fill="none" stroke="#2c2e34" stroke-width="10" stroke-linecap="round"/>
+  <rect x="230" y="440" width="140" height="90" rx="12" fill="none" stroke="#2c2e34" stroke-width="8"/>
+  <path d="M270 440v34M330 440v34" stroke="#2c2e34" stroke-width="7" stroke-linecap="round"/>
+  <text x="300" y="700" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#8d8778">Atelier Noir</text>
+</svg>

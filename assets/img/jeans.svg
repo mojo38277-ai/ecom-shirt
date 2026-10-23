@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="600" height="750" role="img" aria-label="High-waist straight jeans">
+  <rect width="600" height="750" fill="#e9e6e1"/>
+  <path d="M205 170h190l16 150-14 380h-92l-5-300-5 300h-92l-14-380z" fill="#4a6076"/>
+  <path d="M205 170h190l6 60H199z" fill="#3d5165"/>
+  <path d="M300 230v40" stroke="#2f3f50" stroke-width="6"/>
+  <path d="M225 245c14 18 34 27 60 27M375 245c-14 18-34 27-60 27" fill="none" stroke="#5d7690" stroke-width="6"/>
+  <circle cx="300" cy="200" r="7" fill="#c9a86a"/>
+  <text x="300" y="700" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#8d8778">Atelier Noir</text>
+</svg>

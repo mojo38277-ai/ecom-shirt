@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="600" height="750" role="img" aria-label="Classic white t-shirt">
+  <rect width="600" height="750" fill="#e9e6e1"/>
+  <path d="M235 190l-118 62c-12 6-18 20-14 33l30 96c4 13 17 21 31 19l40-7-4 196c-1 15 11 28 26 28h164c15 0 27-13 26-28l-4-196 40 7c14 2 27-6 31-19l30-96c4-13-2-27-14-33l-118-62-46 30h-108z" fill="#f7f5f1" stroke="#d8d3ca" stroke-width="6"/>
+  <path d="M254 196c10 22 26 34 46 34s36-12 46-34" fill="none" stroke="#d8d3ca" stroke-width="7"/>
+  <text x="300" y="700" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#8d8778">Atelier Noir</text>
+</svg>

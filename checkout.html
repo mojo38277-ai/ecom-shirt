@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — Atelier Noir</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111113'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-size='16' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/api.js" defer></script>
+  <script src="js/cart.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#checkoutForm">Skip to checkout form</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <nav class="nav" aria-label="Main">
+        <a class="logo" href="index.html" data-store-name>Atelier Noir</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#shop">Shop</a></li>
+          <li><a href="index.html#categories">Categories</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button type="button" class="icon-btn" id="cartOpenBtn" aria-label="Open shopping cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 7h12l1.2 12.2a1.8 1.8 0 0 1-1.8 2H6.6a1.8 1.8 0 0 1-1.8-2L6 7Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            <span class="cart-count" data-cart-count data-empty="true">0</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="checkout-grid">
+        <section class="panel" id="checkoutPanel">
+          <h1 style="font-size: 30px; margin: 0 0 6px;">Checkout</h1>
+          <p style="color: var(--muted); font-size: 14.5px; margin: 0 0 24px;">Cash on delivery — pay when your order arrives.</p>
+
+          <div class="alert alert-error" id="checkoutAlert" hidden></div>
+
+          <form id="checkoutForm" novalidate>
+            <div class="honeypot" aria-hidden="true">
+              <label for="companyField">Company</label>
+              <input type="text" id="companyField" name="company" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="custName">Full name *</label>
+                <input type="text" id="custName" name="name" autocomplete="name" maxlength="80">
+                <span class="err" data-err-for="custName"></span>
+              </div>
+              <div class="field">
+                <label for="custPhone">Phone number *</label>
+                <input type="tel" id="custPhone" name="phone" autocomplete="tel" placeholder="05 55 00 00 00" maxlength="24">
+                <span class="err" data-err-for="custPhone"></span>
+              </div>
+              <div class="field">
+                <label for="custEmail">Email (optional)</label>
+                <input type="email" id="custEmail" name="email" autocomplete="email" maxlength="120">
+                <span class="err" data-err-for="custEmail"></span>
+              </div>
+              <div class="field">
+                <label for="custWilaya">Wilaya / region *</label>
+                <input type="text" id="custWilaya" name="wilaya" autocomplete="address-level2" maxlength="60">
+                <span class="err" data-err-for="custWilaya"></span>
+              </div>
+              <div class="field full">
+                <label for="custAddress">Delivery address *</label>
+                <textarea id="custAddress" name="address" rows="3" autocomplete="street-address" maxlength="300"></textarea>
+                <span class="err" data-err-for="custAddress"></span>
+              </div>
+            </div>
+
+            <h2 style="font-size: 20px; margin: 28px 0 14px;">Payment method</h2>
+            <div class="pay-options" role="radiogroup" aria-label="Payment method">
+              <label class="pay-option">
+                <input type="radio" name="payment" value="cash_on_delivery" checked>
+                <span><strong>Cash on delivery</strong><span>Pay the courier when your package arrives.</span></span>
+              </label>
+              <label class="pay-option">
+                <input type="radio" name="payment" value="arranged_transfer">
+                <span><strong>Arranged transfer</strong><span>Bank transfer or CCP arranged directly with the store. We will call you to confirm.</span></span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn" id="placeOrderBtn" style="width: 100%;">Place order</button>
+            <p class="cart-note">By placing an order you agree to be contacted by phone to confirm delivery.</p>
+          </form>
+
+          <div class="success-box" id="successBox" hidden>
+            <div class="tick" aria-hidden="true">✓</div>
+            <h2>Order received</h2>
+            <p>Thank you! We will call you shortly to confirm delivery.</p>
+            <p>Order number: <span class="order-id" id="successOrderId"></span></p>
+            <p id="successTotal"></p>
+            <a class="btn btn-ghost" href="index.html#shop" style="margin-top: 18px;">Continue shopping</a>
+          </div>
+        </section>
+
+        <aside class="panel" aria-label="Order summary">
+          <h2>Order summary</h2>
+          <ul class="order-lines" id="checkoutLines"></ul>
+          <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal"></span></div>
+          <div class="summary-row"><span>Delivery</span><span id="sumDelivery">Confirmed by phone</span></div>
+          <div class="summary-row total"><span>Total</span><span id="sumTotal"></span></div>
+          <p class="cart-note" style="text-align: left; margin-top: 14px;">Final stock and price are re-checked on the server when you place the order.</p>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-bottom" style="border-top: none;">
+        <span id="footerCopy"></span>
+        <span class="footer-note">Privacy notice: we only keep your name, phone and address to deliver your order.</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Shopping cart" aria-hidden="true">
+    <div class="cart-head">
+      <h2>Your cart</h2>
+      <button type="button" class="icon-btn" id="cartCloseBtn" aria-label="Close cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="cart-lines" id="cartLines"></div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><span id="cartTotal"></span></div>
+      <a class="btn" href="checkout.html" id="checkoutBtn">Checkout</a>
+      <p class="cart-note">Cash on delivery · no online payment required</p>
+    </div>
+  </aside>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+</body>
+</html>

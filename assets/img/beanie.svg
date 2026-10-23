@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="600" height="750" role="img" aria-label="Ribbed knit beanie">
+  <rect width="600" height="750" fill="#e9e6e1"/>
+  <path d="M190 430c0-84 49-150 110-150s110 66 110 150z" fill="#b8a68d"/>
+  <path d="M190 430h220v46c0 10-8 18-18 18H208c-10 0-18-8-18-18z" fill="#a3906f"/>
+  <path d="M230 300v130M270 282v148M300 276v154M330 282v148M370 300v130" stroke="#a3906f" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="300" cy="258" r="22" fill="#c9baa2"/>
+  <text x="300" y="700" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#8d8778">Atelier Noir</text>
+</svg>

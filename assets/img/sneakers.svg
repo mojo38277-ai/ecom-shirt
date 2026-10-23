@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 750" width="600" height="750" role="img" aria-label="Everyday runner sneakers">
+  <rect width="600" height="750" fill="#e9e6e1"/>
+  <path d="M140 430c30-14 62-46 84-92 12-24 40-32 62-18l60 38c46 28 96 44 148 52 30 5 52 28 54 58l2 40c1 24-18 44-42 44H176c-26 0-46-21-44-47z" fill="#f7f5f1" stroke="#d8d3ca" stroke-width="6"/>
+  <path d="M140 496h366c14 0 24 11 24 25s-10 25-24 25H164c-20 0-34-16-32-35z" fill="#17181c"/>
+  <path d="M240 372l52 40M270 350l56 44M304 334l58 44" stroke="#c9c4bb" stroke-width="8" stroke-linecap="round"/>
+  <path d="M446 466c22 6 42 18 58 34" fill="none" stroke="#d8d3ca" stroke-width="6"/>
+  <text x="300" y="700" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#8d8778">Atelier Noir</text>
+</svg>
