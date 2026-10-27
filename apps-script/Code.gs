@@ -1,25 +1,3 @@
-/**************************************************************
- * Clothing store backend — Google Apps Script Web App
- * Spreadsheet tabs: "Products" and "Orders" (created by setup()).
- *
- * Setup (run once from the Apps Script editor):
- *   1. setup()                    — creates sheets, secret, sample data
- *   2. setAdminPassword()        — prompts for admin email + password
- *
- * Deploy: Deploy > New deployment > Web app
- *   - Execute as: Me
- *   - Who has access: Anyone
- *   - Copy the /exec URL into js/config.js → API_URL
- *
- * Public API (GET):
- *   ?action=products            → active products
- *   ?action=product&id=XYZ      → one product
- * Admin API (POST, JSON body, token from admin_login):
- *   place_order, admin_login, admin_list_products,
- *   admin_list_orders, admin_save_product, admin_set_status,
- *   admin_update_stock, admin_update_order_status
- **************************************************************/
-
 var PRODUCT_HEADERS = ['id', 'name', 'category', 'price', 'old_price', 'description',
   'image_url', 'additional_images', 'sizes', 'colors', 'stock', 'status',
   'created_at', 'updated_at'];
