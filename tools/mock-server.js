@@ -1,23 +1,3 @@
-/*
- * Local test server for the storefront — no dependencies.
- *
- * It serves the static site AND a mock of the Apps Script API on /api,
- * using exactly the same request/response shapes as apps-script/Code.gs.
- * Use it to test the whole app before you deploy to Google Sheets.
- *
- *   Run:   node tools/mock-server.js
- *   Open:  http://127.0.0.1:8787        (storefront)
- *          http://127.0.0.1:8787/admin.html
- *
- * Admin sign-in for the mock:  admin@store.test / admin123
- *
- * To point the site at this server, temporarily set in js/config.js:
- *   API_URL: "http://127.0.0.1:8787/api"
- * (Leave it "" again to ship in demo mode.)
- *
- * Data lives only in memory and resets every time the server restarts.
- */
-
 "use strict";
 
 var http = require("http");
